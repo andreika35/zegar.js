@@ -1,1 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terminal Portfolio - Andrzej</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: limegreen;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #terminal {
+      max-width: 800px;
+      margin: auto;
+    }
+    .prompt {
+      color: limegreen;
+    }
+    #input-line {
+      display: flex;
+    }
+    #command {
+      background: black;
+      color: limegreen;
+      border: none;
+      outline: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .blinker {
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal">
+    <div id="output">
+      <div>Terminal Portfolio v1.0</div>
+      <div>Wpisz <span class="prompt">help</span>, by zobaczyć dostępne komendy.</div>
+    </div>
+    <div id="input-line">
+      <span class="prompt">andrei@localhost:~$&nbsp;</span>
+      <input type="text" id="command" autofocus autocomplete="off" />
+    </div>
+  </div>
+  <script>
+    const output = document.getElementById('output');
+    const input = document.getElementById('command');
+    const responses = {
+      help: "Dostępne komendy: help, about, projects, contact, clear, exit",
+      about: "Jestem Andrzej, Technik Informatyk. Pasjonuję się sieciami, Linuksem, HTML, CSS i memami z kaczką.",
+      projects: "📁 Projekty:\n- tinycore-routing\n- mikrotik-labs\n- portfolio-terminal\n- sieci-szkolne\n- inf.02-prep",
+      contact: "📬 Email: andrei@example.com\n🐙 GitHub: github.com/andrei-sakovich",
+      exit: "Zamykam terminal... Do zobaczenia, operatorze 👋",
+      clear: "clear"
+    };
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim().toLowerCase();
+        const response = responses[cmd] || `❌ Nieznana komenda: "${cmd}". Spróbuj "help".`;
+        if (cmd === 'clear') {
+          output.innerHTML = '';
+        } else {
+          output.innerHTML += `<div><span class="prompt">andrei@localhost:~$</span> ${cmd}</div>`;
+          output.innerHTML += `<div>${response.replace(/\n/g, "<br>")}</div>`;
+        }
+        if (cmd === 'exit') {
+          input.disabled = true;
+          input.style.display = 'none';
+        }
+        input.value = '';
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+    });
+  </script>
+</body>
+</html>
 
