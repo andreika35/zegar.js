@@ -1,94 +1,145 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>Zegar Analogowy z Datą</title>
-  <style>
-    body {
-      background: #111;
-      color: #fff;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .clock {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border: 10px solid #fff;
-      border-radius: 50%;
-      margin-bottom: 20px;
-    }
-    .hand {
-      position: absolute;
-      width: 50%;
-      height: 2px;
-      background: white;
-      top: 50%;
-      left: 50%;
-      transform-origin: 0% 50%;
-      transform: rotate(90deg);
-      transition: transform 0.05s ease-in-out;
-    }
-    .hand.hour { height: 4px; width: 35%; background: #f00; }
-    .hand.minute { height: 3px; width: 45%; background: #0f0; }
-    .hand.second { height: 2px; width: 48%; background: #00f; }
-    .center-dot {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 10px;
-      height: 10px;
-      background: white;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .time-text {
-      font-size: 20px;
-      margin-top: 10px;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Zegar Analogowy z Datą</title>
+<style>
+  body {
+    background: #111;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .clock {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 10px solid #fff;
+    border-radius: 50%;
+    background: radial-gradient(circle, #222, #000);
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  }
+  .hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: left center;
+    border-radius: 4px;
+    transition: transform 0.05s ease-in-out;
+  }
+  .hand.hour {
+    width: 80px;
+    height: 6px;
+    background: #e74c3c;
+    z-index: 3;
+    box-shadow: 0 0 8px #e74c3c;
+    /* Важливо: */
+    transform: translate(0, -50%) rotate(0deg);
+  }
+  .hand.minute {
+    width: 110px;
+    height: 4px;
+    background: #2ecc71;
+    z-index: 2;
+    box-shadow: 0 0 8px #2ecc71;
+    transform: translate(0, -50%) rotate(0deg);
+  }
+  .hand.second {
+    width: 130px;
+    height: 2px;
+    background: #3498db;
+    z-index: 1;
+    box-shadow: 0 0 8px #3498db;
+    transform: translate(0, -50%) rotate(0deg);
+  }
+  .center-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    box-shadow: 0 0 10px #fff;
+  }
+  .number {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 6px rgba(255,255,255,0.7);
+  }
+  .time-text {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+    user-select: none;
+  }
+</style>
 </head>
 <body>
-  <div class="clock">
+  <div class="clock" id="clock">
     <div class="hand hour" id="hour-hand"></div>
     <div class="hand minute" id="minute-hand"></div>
     <div class="hand second" id="second-hand"></div>
     <div class="center-dot"></div>
   </div>
   <div class="time-text" id="digital-clock"></div>
-
-  <script>
-    const hourHand = document.getElementById('hour-hand');
-    const minuteHand = document.getElementById('minute-hand');
-    const secondHand = document.getElementById('second-hand');
-    const digitalClock = document.getElementById('digital-clock');
-
-    function updateClock() {
-      const now = new Date();
-      const seconds = now.getSeconds();
-      const minutes = now.getMinutes();
-      const hours = now.getHours();
-
-      const secondDeg = seconds * 6;
-      const minuteDeg = minutes * 6 + seconds * 0.1;
-      const hourDeg = (hours % 12) * 30 + minutes * 0.5;
-
-      secondHand.style.transform = `rotate(${secondDeg}deg)`;
-      minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
-      hourHand.style.transform = `rotate(${hourDeg}deg)`;
-
-      const day = now.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-      const time = now.toLocaleTimeString('pl-PL');
-      digitalClock.innerHTML = `${day}<br>${time}`;
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock(); // pierwszy raz od razu
-  </script>
+<script>
+  const clock = document.getElementById('clock');
+  for (let i = 1; i <= 12; i++) {
+    const angle = (i - 3) * 30 * Math.PI / 180;
+    const radius = 120;
+    const x = 150 + radius * Math.cos(angle);
+    const y = 150 + radius * Math.sin(angle);
+    const number = document.createElement('div');
+    number.className = 'number';
+    number.style.left = `${x}px`;
+    number.style.top = `${y}px`;
+    number.textContent = i;
+    clock.appendChild(number);
+  }
+  const hourHand = document.getElementById('hour-hand');
+  const minuteHand = document.getElementById('minute-hand');
+  const secondHand = document.getElementById('second-hand');
+  const digitalClock = document.getElementById('digital-clock');
+  function updateClock() {
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const minutes = now.getMinutes();
+    const hours = now.getHours();
+    const secondDeg = seconds * 6;
+    const minuteDeg = minutes * 6 + seconds * 0.1;
+    const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+    hourHand.style.transform = `translate(0, -50%) rotate(${hourDeg}deg)`;
+    minuteHand.style.transform = `translate(0, -50%) rotate(${minuteDeg}deg)`;
+    secondHand.style.transform = `translate(0, -50%) rotate(${secondDeg}deg)`;
+    const day = now.toLocaleDateString('pl-PL', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    const time = now.toLocaleTimeString('pl-PL');
+    digitalClock.innerHTML = `${day}<br>${time}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
 </body>
 </html>
