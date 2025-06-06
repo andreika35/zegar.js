@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Andrzej - Karta Postaci</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: radial-gradient(circle at top, #1f1c2c, #928dab);
+      color: #fff;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      margin: 0;
+      font-size: 48px;
+      letter-spacing: 2px;
+      color: #ffd700;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+    nav button {
+      background: #333;
+      border: 2px solid #888;
+      color: #ffd700;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 16px;
+    }
+    nav button:hover {
+      background: #444;
+    }
+    .tab {
+      display: none;
+      max-width: 800px;
+      margin: 30px auto;
+      background: rgba(0,0,0,0.5);
+      padding: 30px;
+      border-radius: 15px;
+    }
+    .tab.active {
+      display: block;
+    }
+    .skill {
+      margin-bottom: 10px;
+    }
+    .bar {
+      background: #444;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 20px;
+      background: linear-gradient(90deg, #ffd700, #ff8c00);
+    }
+    a {
+      color: #87cefa;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>🛡️ Andrzej Sakovich</h1>
+  <p>Technik Informatyk | Bohater Sieci | Wojownik IPv4</p>
+  <nav>
+    <button onclick="openTab('bio')">Biografia</button>
+    <button onclick="openTab('skills')">Umiejętności</button>
+    <button onclick="openTab('inventory')">Ekwipunek</button>
+    <button onclick="openTab('allies')">Sojusznicy</button>
+  </nav>
+</header>
+<section id="bio" class="tab active">
+  <h2>🧙 Biografia Bohatera</h2>
+  <p>Andrzej, rocznik 2007. Przemierza sieci komputerowe od najmłodszych lat. Włada kablami jak mag różdżką, zna tajemne sztuczki IP route i potrafi rozpoznać protokół po zapachu pakietu.</p>
+  <p>Mistrz Tiny Core Linuxa. Niegdyś mieszkaniec Białorusi, dziś sieciowy wojownik w Polsce.</p>
+</section>
+<section id="skills" class="tab">
+  <h2>🧠 Umiejętności</h2>
+  <div class="skill">
+    <p>Routing i adresacja IPv4</p>
+    <div class="bar"><div class="bar-fill" style="width: 90%"></div></div>
+  </div>
+  <div class="skill">
+    <p>Linux CLI (Tiny Core, Ubuntu Server)</p>
+    <div class="bar"><div class="bar-fill" style="width: 85%"></div></div>
+  </div>
+  <div class="skill">
+    <p>HTML / CSS</p>
+    <div class="bar"><div class="bar-fill" style="width: 70%"></div></div>
+  </div>
+  <div class="skill">
+    <p>MikroTik RouterOS</p>
+    <div class="bar"><div class="bar-fill" style="width: 80%"></div></div>
+  </div>
+</section>
+<section id="inventory" class="tab">
+  <h2>🎒 Ekwipunek (Projekty)</h2>
+  <ul>
+    <li><strong>tinycore-routing:</strong> Skrypt konfiguracji statycznego routingu w Tiny Core Linux</li>
+    <li><strong>mikrotik-labs:</strong> Zestaw scenariuszy na RouterOS (konfiguracja, VLANy, DHCP)</li>
+    <li><strong>terminal-portfolio:</strong> Portfolio stylizowane na terminal (HTML/JS)</li>
+    <li><strong>inf02-prep:</strong> Przygotowanie do egzaminu INF.02 – konfiguracja sieci + bezpieczeństwo</li>
+  </ul>
+</section>
+<section id="allies" class="tab">
+  <h2>🤝 Sojusznicy (Kontakt)</h2>
+  <p>Email: <a href="mailto:andrei@example.com">andrei@example.com</a></p>
+  <p>GitHub: <a href="https://github.com/andrei-sakovich" target="_blank">github.com/andrei-sakovich</a></p>
+  <p>Telegram: @andrei_net_runner</p>
+</section>
+<script>
+  function openTab(id) {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+</body>
+</html>
