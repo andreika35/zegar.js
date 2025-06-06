@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8" />
-<title>Zegar Analogowy z Datą</title>
+<title>Zegareczek pokazuje czas</title>
 <style>
   body {
     background: #111;
@@ -122,12 +122,12 @@
     const seconds = now.getSeconds();
     const minutes = now.getMinutes();
     const hours = now.getHours();
-    const secondDeg = seconds * 6;
-    const minuteDeg = minutes * 6 + seconds * 0.1;
-    const hourDeg = (hours % 12) * 30 + minutes * 0.5;
-    hourHand.style.transform = `translate(0, -50%) rotate(${hourDeg}deg)`;
-    minuteHand.style.transform = `translate(0, -50%) rotate(${minuteDeg}deg)`;
-    secondHand.style.transform = `translate(0, -50%) rotate(${secondDeg}deg)`;
+    const secondDeg = seconds * 6; // 360/60
+    const minuteDeg = minutes * 6 + seconds * 0.1; // 360/60 + доли секунды
+    const hourDeg = (hours % 12) * 30 + minutes * 0.5; // 360/12 + доли минут
+    hourHand.style.transform = `translate(0, -50%) rotate(${hourDeg - 90}deg)`;
+    minuteHand.style.transform = `translate(0, -50%) rotate(${minuteDeg - 90}deg)`;
+    secondHand.style.transform = `translate(0, -50%) rotate(${secondDeg - 90}deg)`;
     const day = now.toLocaleDateString('pl-PL', {
       weekday: 'long',
       day: 'numeric',
